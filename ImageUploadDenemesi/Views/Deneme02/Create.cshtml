@@ -1,0 +1,57 @@
+﻿@model ImageUploadDenemesi.ViewModel.UrunEklemeVM
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>@Model.Title</h2>
+<br />
+
+@if (Model.kullaniciyaMesaj != null)
+{
+    <div class="alert alert-dismissable alert-success">
+        <strong>@Model.kullaniciyaMesaj</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    </div>
+
+
+}
+
+@using (Html.BeginForm("Create", "Deneme02", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h4>
+        @Html.LabelFor(m => m.Adi, new { @class = "label label-primary" })
+    </h4>
+    @Html.TextBoxFor(m => m.Adi, new { @class = "form-control" })
+    <span class="text-primary">
+        @Html.ValidationMessageFor(m => m.Adi)
+    </span>
+
+    //<--------------------------------------------------------->
+
+    <h4>
+        @Html.LabelFor(m => m.KategoriId, new { @class = "label label-primary" })
+    </h4>
+
+    @Html.DropDownListFor(m => m.KategoriId, Model.KategoriListesi, new { @class = "form-control" })
+
+ 
+
+    <span class="text-primary">
+        @Html.ValidationMessageFor(m => m.KategoriId)
+    </span>
+
+    //<--------------------------------------------------------->
+    <h4>
+        @Html.LabelFor(m => m.Resim, new { @class = "label label-primary" })
+    </h4>
+
+        @Html.TextBoxFor(m => m.Resim, new { type = "file", @class = "form-control" })
+
+        <br />
+
+        <input type="submit" name="name" value="Kaydet" class="btn btn-default" />
+
+
+
+
+}

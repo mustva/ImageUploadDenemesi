@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="denemeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sehir" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KategoriId" Type="int" Nullable="false" />
+          <Property Name="Resim" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_Urun_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="denemeModelStoreContainer">
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Urun" EntityType="Self.Urun" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Urun_Kategori" Association="Self.FK_Urun_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="denemeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Uruns" Relationship="Self.FK_Urun_Kategori" FromRole="Kategori" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sehir" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KategoriId" Type="Int32" Nullable="false" />
+          <Property Name="Resim" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kategori" Relationship="Self.FK_Urun_Kategori" FromRole="Urun" ToRole="Kategori" />
+        </EntityType>
+        <Association Name="FK_Urun_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="denemeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kategoris" EntityType="Self.Kategori" />
+          <EntitySet Name="Kullanicis" EntityType="Self.Kullanici" />
+          <EntitySet Name="Uruns" EntityType="Self.Urun" />
+          <AssociationSet Name="FK_Urun_Kategori" Association="Self.FK_Urun_Kategori">
+            <End Role="Kategori" EntitySet="Kategoris" />
+            <End Role="Urun" EntitySet="Uruns" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="denemeModelStoreContainer" CdmEntityContainer="denemeEntities">
+          <EntitySetMapping Name="Kategoris">
+            <EntityTypeMapping TypeName="denemeModel.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicis">
+            <EntityTypeMapping TypeName="denemeModel.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+                <ScalarProperty Name="Sehir" ColumnName="Sehir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uruns">
+            <EntityTypeMapping TypeName="denemeModel.Urun">
+              <MappingFragment StoreEntitySet="Urun">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+                <ScalarProperty Name="Resim" ColumnName="Resim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
